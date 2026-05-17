@@ -367,19 +367,47 @@ body::before {
 .hero-card {
   background: linear-gradient(160deg, var(--bg-1), var(--bg-2));
   border: 1px solid var(--border-2);
-  border-radius: var(--radius-lg); padding: 26px;
+  border-radius: var(--radius-lg);
   box-shadow: var(--sh), var(--glow);
   position: relative; overflow: hidden;
+  padding: 0;
 }
+/* Top shimmer line above the photo */
 .hero-card::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold) 40%, var(--teal) 60%, transparent);
-  opacity: .6;
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent 5%, var(--gold) 40%, var(--teal) 60%, transparent 95%);
+  opacity: .7; z-index: 3;
 }
+
+/* Photo */
+.hero-photo-wrap {
+  position: relative;
+  height: 310px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.hero-photo {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center 12%;
+  display: block;
+  transition: transform 700ms ease;
+}
+.hero-card:hover .hero-photo { transform: scale(1.03); }
+/* Fade photo into card body */
+.hero-photo-fade {
+  position: absolute; bottom: 0; left: 0; right: 0; height: 90px;
+  background: linear-gradient(to bottom, transparent, var(--bg-1));
+  pointer-events: none; z-index: 1;
+}
+[data-theme="light"] .hero-photo-fade {
+  background: linear-gradient(to bottom, transparent, var(--bg-1));
+}
+
+.card-body { padding: 18px 24px 24px; }
 .card-label {
   font-family: var(--mono); font-size: .69rem; letter-spacing: .18em;
   text-transform: uppercase; color: var(--text-3);
-  display: flex; align-items: center; gap: 8px; margin-bottom: 18px;
+  display: flex; align-items: center; gap: 8px; margin-bottom: 16px;
 }
 .card-label::before {
   content: ''; width: 5px; height: 5px; border-radius: 50%;
@@ -388,8 +416,8 @@ body::before {
 .hero-card ul { list-style: none; }
 .hero-card li {
   display: flex; align-items: baseline; gap: 10px;
-  padding: 10px 0; border-bottom: 1px solid var(--border);
-  font-size: .88rem; color: var(--text-2); line-height: 1.45;
+  padding: 9px 0; border-bottom: 1px solid var(--border);
+  font-size: .86rem; color: var(--text-2); line-height: 1.45;
 }
 .hero-card li:last-child { border-bottom: none; padding-bottom: 0; }
 .hero-card li:first-child { padding-top: 0; }
@@ -729,6 +757,10 @@ footer { border-top: 1px solid var(--border); padding: 28px 0; }
   .hero h1 { max-width: none; }
   .hero-sub { max-width: none; }
 
+  /* Photo: wider, shorter on tablet — landscape crop */
+  .hero-photo-wrap { height: 380px; }
+  .hero-photo { object-position: center 10%; }
+
   .stats-inner { padding: 0 24px; }
 
   .cap-grid      { grid-template-columns: repeat(2, 1fr); }
@@ -792,6 +824,8 @@ footer { border-top: 1px solid var(--border); padding: 28px 0; }
    RESPONSIVE — MOBILE  (≤ 560px)
    ============================================================ */
 @media (max-width: 560px) {
+  .hero-photo-wrap { height: 300px; }
+
   .hero { padding: 64px 0 52px; }
   .hero-eyebrow { font-size: .68rem; }
   .hero-tags { gap: 6px; }
@@ -926,14 +960,28 @@ footer { border-top: 1px solid var(--border); padding: 28px 0; }
       </div>
 
       <aside class="hero-card reveal d2" aria-label="At a glance">
-        <div class="card-label">At a glance</div>
-        <ul>
-          <li><span class="li-num">01</span><span><strong>19+ years</strong> in enterprise software &amp; fintech platforms</span></li>
-          <li><span class="li-num">02</span><span><strong>IEEE Senior Member</strong> — CS, Control Systems, Signal Processing, TEMS</span></li>
-          <li><span class="li-num">03</span><span><strong>6 peer-reviewed papers</strong> — search, knowledge graphs, LLMs &amp; responsible AI</span></li>
-          <li><span class="li-num">04</span><span><strong>Engineering leader</strong> across agentic AI, autonomous servicing &amp; customer experience</span></li>
-          <li><span class="li-num">05</span><span><strong>CCIC 2026</strong> invited industry keynote speaker</span></li>
-        </ul>
+        <div class="hero-photo-wrap">
+          <img
+            src="martin-louis.png"
+            alt="Martin Louis — AI &amp; FinTech Engineering Leader"
+            class="hero-photo"
+            loading="eager"
+            decoding="async"
+            width="360"
+            height="310"
+          />
+          <div class="hero-photo-fade" aria-hidden="true"></div>
+        </div>
+        <div class="card-body">
+          <div class="card-label">At a glance</div>
+          <ul>
+            <li><span class="li-num">01</span><span><strong>19+ years</strong> in enterprise software &amp; fintech platforms</span></li>
+            <li><span class="li-num">02</span><span><strong>IEEE Senior Member</strong> — CS, Control Systems, Signal Processing, TEMS</span></li>
+            <li><span class="li-num">03</span><span><strong>6 peer-reviewed papers</strong> — search, knowledge graphs, LLMs &amp; responsible AI</span></li>
+            <li><span class="li-num">04</span><span><strong>Engineering leader</strong> across agentic AI, autonomous servicing &amp; customer experience</span></li>
+            <li><span class="li-num">05</span><span><strong>CCIC 2026</strong> invited industry keynote speaker</span></li>
+          </ul>
+        </div>
       </aside>
 
     </div>
@@ -1162,7 +1210,7 @@ footer { border-top: 1px solid var(--border); padding: 28px 0; }
       </article>
       <article class="pub-item" data-j="ire" role="listitem">
         <span class="pub-year">2019</span>
-        <h3 class="pub-title"><a href="https://www.irejournals.com/paper-details/170102" target="_blank" rel="noopener">Multilingual Search Optimization Using BERT AI and Product Knowledge Bases</a></h3>
+        <h3 class="pub-title"><a href="https://www.irejournals.com/index.php/paper-details/1701028" target="_blank" rel="noopener">Multilingual Search Optimization Using BERT AI and Product Knowledge Bases</a></h3>
         <span class="pub-venue">IRE Journals</span>
       </article>
     </div>
