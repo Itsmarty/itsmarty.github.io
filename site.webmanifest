@@ -1,0 +1,17 @@
+{
+  "name": "Martin Louis — Enterprise AI, Platform Product & Transformation Leader",
+  "short_name": "Martin Louis",
+  "description": "Professional profile, transformation record, research, invention, and recognition for Martin Louis.",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#f4f0e7",
+  "theme_color": "#245743",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
